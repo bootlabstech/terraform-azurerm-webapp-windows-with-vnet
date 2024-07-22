@@ -1,24 +1,25 @@
 # Creates a Windows webapp
 resource "azurerm_windows_web_app" "example" {
-  name                      = var.name
-  resource_group_name       = var.resource_group_name
-  location                  = var.location
-  service_plan_id           = var.service_plan_id
+  name                = var.name
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  service_plan_id     = var.service_plan_id
+  https_only = var.https_only
   virtual_network_subnet_id = var.virtual_network_subnet_id
 
   site_config {
-    ftps_state             = var.ftps_state
-    app_command_line       = var.app_command_line
+    ftps_state       = var.ftps_state
     vnet_route_all_enabled = var.vnet_route_all_enabled
-    # dynamic "application_stack" {
-    #   for_each = var.current_stack == "docker" ? [1] : []
-    #   content {
-    #     docker_image_name        = var.stack_version
-    #     docker_registry_url      = var.docker_registry_url
-    #     docker_registry_username = var.docker_registry_username
-    #     docker_registry_password = var.docker_registry_password
-    #   }
-    # }
+    app_command_line = var.app_command_line
+    dynamic "application_stack" {
+      for_each = var.current_stack == "docker" ? [1] : []
+      content {
+        docker_image_name        = var.stack_version
+        docker_registry_url      = var.docker_registry_url
+        docker_registry_username = var.docker_registry_username
+        docker_registry_password = var.docker_registry_password
+      }
+    }
     dynamic "application_stack" {
       for_each = var.current_stack == "dotnet" ? [1] : []
       content {
@@ -35,8 +36,7 @@ resource "azurerm_windows_web_app" "example" {
       for_each = var.current_stack == "java" ? [1] : []
       content {
         java_version                 = var.stack_version
-        java_embedded_server_enabled = var.java_embedded_server_enabled
-        tomcat_version               = var.tomcat_version
+
       }
     }
     dynamic "application_stack" {
@@ -68,4 +68,4 @@ resource "azurerm_windows_web_app" "example" {
     virtual_path = var.virtual_path1
   }
   }
-}
+  }
