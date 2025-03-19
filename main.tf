@@ -159,7 +159,7 @@ resource "azurerm_windows_web_app" "example" {
     dynamic "application_stack" {
       for_each = var.current_stack == "python" ? [1] : []
       content {
-        python = var.python
+        python = var.stack_version
       }
     }
   virtual_application {
