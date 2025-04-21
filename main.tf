@@ -7,6 +7,17 @@ resource "azurerm_windows_web_app" "example" {
   https_only = var.https_only
   virtual_network_subnet_id = var.virtual_network_subnet_id
 
+  lifecycle {
+    ignore_changes = [
+      site_config[0].application_stack[0].dotnet_version,
+      site_config[0].application_stack[0].dotnet_core_version,
+      site_config[0].application_stack[0].java_version,
+      site_config[0].application_stack[0].node_version,
+      site_config[0].application_stack[0].php_version,
+      site_config[0].application_stack[0].python
+    ]
+  }
+
   site_config {
     ftps_state       = var.ftps_state
     vnet_route_all_enabled = var.vnet_route_all_enabled
@@ -162,6 +173,7 @@ resource "azurerm_windows_web_app" "example" {
         python = var.stack_version
       }
     }
+    
   virtual_application {
     preload = true
     physical_path = var.physical_path
@@ -172,5 +184,6 @@ resource "azurerm_windows_web_app" "example" {
     physical_path = var.physical_path1
     virtual_path = var.virtual_path1
   }
+ 
   }
   }
