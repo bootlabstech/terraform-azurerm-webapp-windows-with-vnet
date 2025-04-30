@@ -7,8 +7,9 @@ resource "azurerm_windows_web_app" "example" {
   https_only = var.https_only
   virtual_network_subnet_id = var.virtual_network_subnet_id
 
-    lifecycle {
+  lifecycle {
     ignore_changes = [
+      site_config[0].virtual_application,
       site_config[0].application_stack[0].dotnet_version,
       site_config[0].application_stack[0].dotnet_core_version,
       site_config[0].application_stack[0].java_version,
