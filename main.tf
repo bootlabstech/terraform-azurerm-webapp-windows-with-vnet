@@ -9,6 +9,7 @@ resource "azurerm_windows_web_app" "example" {
 
   lifecycle {
     ignore_changes = [
+      site_config[0].ip_restriction,
       site_config[0].virtual_application,
       site_config[0].application_stack[0].dotnet_version,
       site_config[0].application_stack[0].dotnet_core_version,
