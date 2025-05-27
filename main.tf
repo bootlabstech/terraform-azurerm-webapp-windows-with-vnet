@@ -9,6 +9,7 @@ resource "azurerm_windows_web_app" "example" {
 
   lifecycle {
     ignore_changes = [
+      site_config[0].cors,
       site_config[0].virtual_application,
       site_config[0].application_stack[0].dotnet_version,
       site_config[0].application_stack[0].dotnet_core_version,
@@ -22,7 +23,7 @@ resource "azurerm_windows_web_app" "example" {
     ftps_state       = var.ftps_state
     vnet_route_all_enabled = var.vnet_route_all_enabled
     cors {
-      allowed_origins     = []
+      allowed_origins     = ["*"]
       support_credentials = true
     }
     ip_restriction {
