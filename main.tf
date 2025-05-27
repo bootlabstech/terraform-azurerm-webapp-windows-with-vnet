@@ -9,7 +9,6 @@ resource "azurerm_windows_web_app" "example" {
 
   lifecycle {
     ignore_changes = [
-      site_config[0].ip_restriction,
       site_config[0].virtual_application,
       site_config[0].application_stack[0].dotnet_version,
       site_config[0].application_stack[0].dotnet_core_version,
@@ -22,6 +21,10 @@ resource "azurerm_windows_web_app" "example" {
   site_config {
     ftps_state       = var.ftps_state
     vnet_route_all_enabled = var.vnet_route_all_enabled
+    cors {
+      allowed_origins     = []
+      support_credentials = true
+    }
     ip_restriction {
        action     = "Allow" 
               headers    = [] 
@@ -126,6 +129,13 @@ resource "azurerm_windows_web_app" "example" {
               ip_address = "131.0.72.0/22" 
               name       = "cf15" 
                priority   = 100
+    }
+    ip_restriction {
+      action     = "Allow"
+      headers    = []
+      ip_address = "0.0.0.0/0"
+      name       = "Test"
+      priority   = 100
     }
 
     app_command_line = var.app_command_line

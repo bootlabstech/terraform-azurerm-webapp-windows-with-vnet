@@ -130,5 +130,3 @@ variable "virtual_network_subnet_id" {
   type = string
   description = "vnet link" 
 }
-
-
