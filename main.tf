@@ -23,6 +23,7 @@ resource "azurerm_windows_web_app" "example" {
     ip_restriction_default_action = var.ip_restriction_default_action
     ftps_state       = var.ftps_state
     vnet_route_all_enabled = var.vnet_route_all_enabled
+    use_32_bit_worker = var.use_32_bit_worker
     ip_restriction {
        action     = "Allow" 
               headers    = [] 
