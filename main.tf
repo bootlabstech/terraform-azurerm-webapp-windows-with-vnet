@@ -9,6 +9,8 @@ resource "azurerm_windows_web_app" "example" {
 
   lifecycle {
     ignore_changes = [
+      app_settings,
+      sticky_settings,
       site_config[0].cors,
       site_config[0].virtual_application,
       site_config[0].application_stack[0].dotnet_version,
